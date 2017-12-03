@@ -1,6 +1,7 @@
 package com.eddsteel.advent17
 package cmd
 import types._
+import challenges._
 import aoc._
 import _root_.cats.data.EitherT
 import _root_.cats.effect.IO
@@ -13,6 +14,7 @@ object AdventCommand {
   val main: Opts[Unit] = {
     val day = Opts.argument[Day]("day")
     val input = Opts.argument[String]("input")
+    val star = Opts.argument[Star]("star")
 
     def run(f: AdventOfCode => IO[Unit]): Unit =
       (for {
@@ -30,7 +32,7 @@ object AdventCommand {
         header = "get a challenge's description"
       ) {
         day.map { d =>
-          run(_.getDescription(d))
+          run(_.getDescription(d).flatMap(d => IO(println(d))))
         }
       })
 
@@ -40,7 +42,7 @@ object AdventCommand {
         header = "get a challenge's input"
       ) {
         day.map { d =>
-          run(_.getInput(d))
+          run(_.getInput(d).flatMap(d => IO(println(d))))
         }
       })
 
@@ -52,6 +54,20 @@ object AdventCommand {
         (day, input).mapN { case (d, i) => run(_.postSolution(d, i)) }
       })
 
-    getDescriptionCmd.orElse(getInputCmd).orElse(postSolution)
+    val runChallenge = Opts.subcommand(
+      Command(
+        name = "run",
+        header = "run a solution"
+      ) {
+        (day, star).mapN { (d, s) =>
+          run { aoc =>
+            aoc.getInput(d).flatMap { input =>
+              IO(println(Challenges(d).run(s, input)))
+            }
+          }
+        }
+      })
+
+    getDescriptionCmd.orElse(getInputCmd).orElse(postSolution).orElse(runChallenge)
   }
 }

@@ -17,7 +17,6 @@ scmInfo := Some(
   ScmInfo(url("https://github.com/eddsteel/advent17"),
           "scm:git:https://github.com/eddsteel/advent17.git"))
 
-val cirisVersion = "0.5.0"
 libraryDependencies += "org.typelevel"      %% "cats-core"           % "1.0.0-RC1"
 libraryDependencies += "eu.timepit"         %% "refined"             % "0.8.4"
 libraryDependencies += "org.scalatest"      %% "scalatest"           % "3.0.4" % "test"
@@ -28,10 +27,10 @@ libraryDependencies += "com.monovore"       %% "decline-refined"     % "0.4.0-RC
 libraryDependencies += "org.typelevel"      %% "kittens"             % "1.0.0-RC1"
 libraryDependencies += "net.ruippeixotog"   %% "scala-scraper"       % "2.0.0"
 libraryDependencies += "org.apache.commons" % "commons-lang3"        % "3.7"
-libraryDependencies ++= Seq(
-  "is.cir" %% "ciris-core",
-  "is.cir" %% "ciris-refined"
-).map(_ % cirisVersion)
+libraryDependencies += "is.cir"             %% "ciris-core"          % "0.5.0"
+libraryDependencies += "is.cir"             %% "ciris-refined"       % "0.5.0"
+
+addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.3")
 
 Lint.settings
 Flags.settings
