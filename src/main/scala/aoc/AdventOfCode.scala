@@ -16,7 +16,8 @@ trait AdventOfCode {
     get(s"/${year.show}/day/${day.show}").flatMap { html =>
       val doc = AdventOfCode.browser.parseString(html)
       val title = doc >> text("main article h2")
-      val body = (doc >> elementList("main article p, main article ul")).map(_ >> text("*"))
+      val body = (doc >> elementList("main article p, main article ul, main article pre"))
+        .map(_ >> text("*"))
       val description =
         s"${title}\n\n${WordUtils.wrap(body.map(_.replaceAll("\n", "")).mkString("\n\n"), 80)}"
 
