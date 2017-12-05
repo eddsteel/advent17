@@ -10,6 +10,7 @@ object Challenges {
   def apply(d: Day): Challenge = d.value match {
     case 1 => Challenge1
     case 2 => Challenge2
+    case 3 => Challenge3
     case _ =>
       new Challenge() {
         def run(star: Star, input: String): String = "not implemented yet."
