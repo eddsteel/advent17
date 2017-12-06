@@ -9,7 +9,6 @@ class Challenge3Test extends FlatSpec {
     assert(Challenge3.blockDistance(1024) === Some(31))
 
     val grid = Challenge3.Grid.from((0, 0), (1, 0), (1, 1), (0, 1), (-1, 1))
-    println(grid)
     assert(grid.valueAt((0, 0)) === 1)
     assert(grid.valueAt((1, 0)) === 1)
     assert(grid.valueAt((1, 1)) === 2)

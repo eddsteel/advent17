@@ -116,6 +116,4 @@ progress along this with an intermediate grid as state.
 state monad.
 Star 1 is current coords (final state x + y is the block distance after as many steps as input)
 Star 2 is current grid and current coords (final state is the sum of surrounding squares that adds up to more than input)
-
-
  */
