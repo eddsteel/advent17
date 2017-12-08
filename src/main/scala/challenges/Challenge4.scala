@@ -1,6 +1,6 @@
 package com.eddsteel.advent17.challenges
-import cats.data.NonEmptyList
-import cats.implicits._
+import _root_.cats.data.NonEmptyList
+import _root_.cats.implicits._
 
 object Challenge4 extends Challenge {
   type Line = String

@@ -1,5 +1,5 @@
 package com.eddsteel.advent17.challenges
-import cats.implicits._
+import _root_.cats.implicits._
 
 object Challenge5 extends Challenge {
 

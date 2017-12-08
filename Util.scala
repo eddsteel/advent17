@@ -1,6 +1,6 @@
 package com.eddsteel.advent17.challenges
-import cats.Traverse
-import cats.implicits._
+import _root_.cats.Traverse
+import _root_.cats.implicits._
 
 object Util {
   def parseInt(s: String): ErrorOr[Int] =

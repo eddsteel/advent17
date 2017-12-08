@@ -1,6 +1,6 @@
 package com.eddsteel.advent17.challenges
-import cats.data.NonEmptyList
-import cats.implicits._
+import _root_.cats.data.NonEmptyList
+import _root_.cats.implicits._
 
 object Challenge1 extends Challenge {
   def run(star: Star, input: String): String = {

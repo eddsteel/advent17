@@ -1,7 +1,7 @@
 package com.eddsteel.advent17
 package aoc
-import cats.derive
-import cats.Show
+import _root_.cats.derive
+import _root_.cats.Show
 import ciris.ConfigErrors
 
 object AdventError {
