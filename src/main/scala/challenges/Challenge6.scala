@@ -10,21 +10,29 @@ object Challenge6 extends Challenge {
   def zeroes(length: Int): Banks =
     NonEmptyVector(0, Vector.fill(length - 1)(0))
 
+  def ones(length: Int): Banks =
+    NonEmptyVector(1, Vector.fill(length - 1)(1))
+
   def biggest(banks: Banks): (Bank, Int) =
     banks.toVector.zipWithIndex.maxBy(_._1)
+
+  def unsafeOp[A](v: NonEmptyVector[A])(op: Vector[A] => Vector[A]): NonEmptyVector[A] =
+    NonEmptyVector.fromVectorUnsafe(op(v.toVector))
+
+  def padToMultiple[A](v: NonEmptyVector[A], factor: Int, value: A): NonEmptyVector[A] =
+    unsafeOp(v) { v =>
+      val ln = v.length
+      val padToLn = ln + factor - ((ln + factor) % factor)
+      v.padTo(padToLn, value)
+    }
 
   def cycle(banks: Banks): Banks = {
     val (mem, idx) = biggest(banks)
     val initial = banks.updatedUnsafe(idx, 0)
 
-    // generate adds -- we can probably formulate something based on start and length?
-    val addl: Banks = Range(idx + 1, mem + idx + 1).foldLeft(zeroes(banks.length)) {
-      case (state, next) =>
-        val idx = next % state.length
-        state.updatedUnsafe(idx, state.getUnsafe(idx) + 1)
+    unsafeOp(padToMultiple(initial |+| zeroes(idx + 1) |+| ones(mem), banks.length, 0)) {
+      _.grouped(banks.length).toVector.transpose.map(_.combineAll)
     }
-
-    initial.zipWith(addl)(_ + _)
   }
 
   def streamFrom(banks: Banks): Stream[Banks] =
@@ -32,9 +40,7 @@ object Challenge6 extends Challenge {
 
   def streamToDupe(banks: Banks): Option[(Int, Banks)] =
     streamFrom(banks)
-      .scanLeft(Set.empty[Banks]) {
-        _ + _
-      }
+      .scanLeft(Set.empty[Banks])(_ + _)
       .zip(streamFrom(banks))
       .zipWithIndex
       .collectFirst {
