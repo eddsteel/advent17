@@ -3,6 +3,10 @@ import _root_.cats.Traverse
 import _root_.cats.implicits._
 
 object Util {
+
+  def parseLong(s: String): ErrorOr[Long] =
+    Either.catchNonFatal(s.toLong).leftMap(c => s"Bad input: $c")
+
   def parseInt(s: String): ErrorOr[Int] =
     Either.catchNonFatal(s.toInt).leftMap(c => s"Bad input: $c")
 

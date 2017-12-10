@@ -82,9 +82,8 @@ object Challenge3 extends Challenge {
   def run(star: Star, input: String): String = {
     val solver = star.switch(blockDistance _, firstLarger _)
 
-    Either
-      .catchNonFatal(input.toInt)
-      .leftMap(_ => "invalid input!")
+    Util
+      .parseInt(input)
       .flatMap(in => solver(in).toRight("Didn't find solution"))
       .fold(identity, _.show)
   }

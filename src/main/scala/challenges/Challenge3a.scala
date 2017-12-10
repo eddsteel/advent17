@@ -55,11 +55,7 @@ object Challenge3a extends Challenge {
   def run(star: Star, input: String): String = {
     val solver = star.switch(blockDistance _, blockDistance _)
 
-    Either
-      .catchNonFatal(input.toInt)
-      .leftMap(_ => "invalid input!")
-      .map(solver)
-      .fold(identity, _.show)
+    Util.parseInt(input).map(solver).fold(identity, _.show)
   }
 }
 
