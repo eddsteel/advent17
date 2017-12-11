@@ -34,6 +34,13 @@ object Parser {
     }
 
   def pureOption[A](x: Option[A]): Parser[A] = s => x.map((_, s))
+
+  def flattenParser[A](parser: Parser[Option[A]]): Parser[A] =
+    str =>
+      parser(str).flatMap {
+        case (Some(a), s) => Some((a, s))
+        case _            => None
+    }
 }
 
 object Parsers {
@@ -79,8 +86,12 @@ object Parsers {
     parseOneOrMany(parseDigit).map(_.toList.mkString)
 
   // if the string isn't a valid int this will still consume it, but
-  // numbers shouldn't so I guess we're ok?
+  // numbers shouldn't so I guess were ok?
   val parseNumber: Parser[Long] =
-    parseDigits.flatMap(s => Parser.pureOption(Util.parseLong(s).toOption))
-
+    (
+      parseOpt(parseChar('-')),
+      parseDigits.flatMap(s => Parser.pureOption(Util.parseLong(s).toOption))).mapN {
+      case (Some("-"), l) => -l
+      case (_, l)         => l
+    }
 }
