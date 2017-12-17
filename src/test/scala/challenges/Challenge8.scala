@@ -29,7 +29,7 @@ class Challenge8Test extends FlatSpec with Matchers {
       .execute(Map("a" -> 1, "c" -> 10))
       .shouldEqual(Map("a" -> 1, "c" -> -10))
 
-    parseInstructions(input).map(runFromEmpty).map(largestValue).shouldEqual(Right(1))
+    parseInstructions(input).map(runFromEmptyLastMax).shouldEqual(Right(1))
   }
 
   it should "parse input as expected" in {
