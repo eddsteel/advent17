@@ -41,6 +41,11 @@ object Parser {
         case (Some(a), s) => Some((a, s))
         case _            => None
     }
+
+  implicit class ParserSyntax[A](p: Parser[A]) {
+    def or(q: => Parser[A]): Parser[A] =
+      s => p(s).orElse(q(s))
+  }
 }
 
 object Parsers {
