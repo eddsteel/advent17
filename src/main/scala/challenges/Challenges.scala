@@ -25,6 +25,7 @@ object Challenges {
     case 8  => Challenge8
     case 9  => Challenge9
     case 10 => Challenge10
+    case 11 => Challenge11
     case _  => Challenge.Unimplemented
   }
 }
