@@ -27,7 +27,6 @@ object Challenge12 extends Challenge {
     collected: Association): Association = queue.toList match {
     case Nil => collected
     case next :: rest =>
-      println(s"$queue, $visited, $collected")
       val cs = conns(associations, next)
       deepConns(
         associations,
