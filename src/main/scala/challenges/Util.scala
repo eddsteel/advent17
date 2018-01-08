@@ -12,4 +12,8 @@ object Util {
 
   def parseInts[T[_]: Traverse](s: T[String]): ErrorOr[T[Int]] =
     s.map(parseInt).sequence[ErrorOr, Int]
+
+  def padStringL(length: Int, char: Char)(initial: String): String =
+    initial.toString.reverse.padTo(length, char).reverse.mkString
+
 }

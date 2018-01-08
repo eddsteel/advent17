@@ -4,11 +4,8 @@ import _root_.cats.implicits._
 object Challenge15 extends Challenge {
   import Parser._, Parsers._
 
-  def padString(length: Int, char: Char)(initial: String): String =
-    initial.toString.reverse.padTo(length, char).reverse.mkString
-
   def binarize(value: Long): String =
-    padString(32, '0')(value.toBinaryString)
+    Util.padStringL(32, '0')(value.toBinaryString)
 
   class Generator(factor: Int) {
     def generateNext(last: Long): Long =
