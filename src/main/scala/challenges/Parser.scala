@@ -57,6 +57,7 @@ object Parsers {
         (g, s.drop(g.length)) // TODO: is there a regex method for this?
     }
 
+  // hella not stack safe
   def parseOneOrMany[A](parser: Parser[A]): Parser[NonEmptyList[A]] =
     s =>
       for {
@@ -66,6 +67,12 @@ object Parsers {
 
   def parseMany[A](parser: Parser[A]): Parser[List[A]] =
     s => parseOneOrMany(parser).map(_.toList)(s).orElse(Some((List.empty[A], s)))
+
+  def parseAnyChar: Parser[Char] =
+    s =>
+      s.headOption.map { h =>
+        (h, s.drop(1))
+    }
 
   def parseChar(c: Char): Parser[String] =
     parseRegex(s"[$c]".r)
